@@ -87,18 +87,17 @@ namespace ProcessingService.Controllers
         {
             try
             {
-
+                var product = new Product { ProductId = orderDto.ProductId, ProductName = orderDto.ProductName };
 
 
                 var filter = Builders<Order>.Filter.Eq(o => o.OrderId, orderId);
                 var update = Builders<Order>.Update
                     .Set(o => o.IsProcesing, orderDto.IsProcesing)
-                    .Set(o => o.ProductName, orderDto.ProductName)
+                    .Set(o => o.OrderProduct, product)
                     .Set(o => o.Quantity, orderDto.Quantity)
-                    .Set(o=>o.TotalPrice, orderDto.Quantity * orderDto.Price)
-                    .Set(o=> o.Price, orderDto.Price)
-                    .Set(o=>o.OrderStatus, orderDto.OrderStatus)
-                    .Set(o=>o.ProductId, orderDto.ProductId);
+                    .Set(o => o.TotalPrice, orderDto.Quantity * orderDto.Price)
+                    .Set(o => o.Price, orderDto.Price)
+                    .Set(o => o.OrderStatus, orderDto.OrderStatus);
 
                 var options = new FindOneAndUpdateOptions<Order>
                 {
